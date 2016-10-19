@@ -9,8 +9,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "codemirror": "^5.19.0",
     "github-markdown-css": "^2.4.1",
     "marked": "^0.3.6",
+    "node-uuid": "^1.4.7",
     "vue": "^2.0.1",
     "vue-codemirror": "^2.1.0"
   },

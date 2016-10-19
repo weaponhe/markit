@@ -9,15 +9,13 @@
         @delete="deleteFile">
       </Sidebar>
     </div>
-    <div class="container-optbar">
-      <Optbar :menuOpened="menuOpened"
-              @toggleMenu="toggleMenu">
-      </Optbar>
-    </div>
     <div class="container-editor">
-      <Editor :fileList="fileList"
-              :index="activeFileIndex"
-              @updateFile="updateFile">
+      <Editor
+        :menuOpened="menuOpened"
+        :index="activeFileIndex"
+        :file="fileList[activeFileIndex]"
+        @updateFile="updateFile"
+        @toggleMenu="toggleMenu">
       </Editor>
     </div>
   </div>
@@ -25,36 +23,61 @@
 
 <script>
   import Sidebar from './components/Sidebar'
-  import Editor from './components/Editor'
-  import Optbar from './components/Optbar'
+  import Editor from './components/Editor_temp'
+  var uuid = require('node-uuid');
 
   export default {
     components: {
       Sidebar: Sidebar,
-      Editor: Editor,
-      Optbar: Optbar
+      Editor: Editor
     },
     data () {
       return {
-        menuOpened: true,
+        menuOpened: false,
         activeFileIndex: 0,
-        fileList: ['asd0\n---\nHello', 'asd1\n---\nHello', 'asd2\n---\nHello']
+        fileList: [
+          {
+            cid: uuid.v1(),
+            content: 'asd0\n---\nHello sadasdasd asdasdas'
+          },
+          {
+            cid: uuid.v1(),
+            content: 'asd1\n---\nHello'
+          }
+        ]
       }
     },
     methods: {
       changeActive: function (index) {
         this.activeFileIndex = index
       },
+      //OK
       createFile: function () {
-        this.fileList.push('asd' + this.fileList.length + '\n')
+        this.fileList.push(
+          {
+            cid: uuid.v1(),
+            content: 'New File' + this.fileList.length + '\n---\nHello Markit!'
+          });
         this.activeFileIndex = this.fileList.length - 1
       },
+      //OK
       deleteFile: function (index) {
         this.fileList.splice(index, 1);
+        if (this.fileList.length === 0) {
+          this.createFile();
+        } else {
+          if (index === this.activeFileIndex) {
+            this.activeFileIndex = 0;
+          } else if (index < this.activeFileIndex) {
+            this.activeFileIndex--;
+          }
+        }
       },
+      //OK
       updateFile: function (index, content) {
-        this.fileList.splice(index, 1, content)
+        this.fileList[index].content = content;
       },
+      //OK
       toggleMenu: function () {
         this.menuOpened = !this.menuOpened;
       }
@@ -65,8 +88,8 @@
 <style>
   @font-face {
     font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_1476776371_4195113.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1476776371_4195113.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1476776371_4195113.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1476776371_4195113.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1476776371_4195113.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('//at.alicdn.com/t/font_1476841100_5491998.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1476841100_5491998.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1476841100_5491998.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1476841100_5491998.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1476841100_5491998.svg#iconfont') format('svg'); /* iOS 4.1- */
   }
 
   .iconfont {
@@ -136,24 +159,9 @@
     left: 0;
   }
 
-  .container-optbar {
-    position: absolute;
-    z-index: 50;
-    top: 0;
-    left: 0;
-    right: 0;
-    box-sizing: border-box;
-    height: 50px;
-    width: 100%;
-  }
-
-  .opened .container-optbar {
-    left: 380px;
-  }
-
   .container-editor {
     position: absolute;
-    top: 50px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -166,7 +174,6 @@
   }
 
   .container-sidebar,
-  .container-optbar,
   .container-editor {
     transition: left 0.3s ease-out;
   }

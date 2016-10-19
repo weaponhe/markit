@@ -8,6 +8,7 @@
 <script>
   let marked = require('marked')
   import {codemirror} from 'vue-codemirror'
+  console.log(codemirror.editor);
   export default{
     name: 'editor',
     props: ['fileList', 'index'],
@@ -25,8 +26,8 @@
       }
     },
     computed: {
+
       html: function () {
-        console.log('editor:',this.index);
         return marked(this.fileList[this.index].split('---')[1])
       }
     },
@@ -56,6 +57,8 @@
     height: auto;
     box-sizing: border-box;
     width: 50%;
+    font-size: 18px;
+    line-height: 22px;
   }
 
   .editor-preview {

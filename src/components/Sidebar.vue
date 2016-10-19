@@ -7,7 +7,7 @@
           @click="selectActive(index)">
         <div class="sidebar-item-title">{{file.title}}</div>
         <div class="sidebar-item-option"
-             @click="deleteFile(index)">
+             @click.stop="deleteFile(index)">
           <i class="iconfont">&#xe60b;</i>
         </div>
       </li>
@@ -34,7 +34,7 @@
     computed: {
       fileObjList: function () {
         return this.fileList.map((file) => {
-          let title = file.split('\n')[0]
+          let title = file.content.split('\n')[0]
           return {
             title: title || 'New File'
           }
