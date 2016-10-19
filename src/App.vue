@@ -23,7 +23,7 @@
 
 <script>
   import Sidebar from './components/Sidebar'
-  import Editor from './components/Editor_temp'
+  import Editor from './components/Editor'
   var uuid = require('node-uuid');
 
   export default {
@@ -88,9 +88,14 @@
 <style>
   @font-face {
     font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_1476841100_5491998.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1476841100_5491998.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1476841100_5491998.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1476841100_5491998.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1476841100_5491998.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('//at.alicdn.com/t/font_1476881555_6268332.woff') format('woff'), /* chrome、firefox */
+    url('//at.alicdn.com/t/font_1476881555_6268332.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_1476881555_6268332.svg#iconfont') format('svg'); /* iOS 4.1- */
   }
+
+
 
   .iconfont {
     font-family: "iconfont" !important;
