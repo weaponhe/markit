@@ -27,7 +27,7 @@
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
-    <div class="editor-preview markdown-body" v-html="html"></div>
+    <div class="editor-preview markdown-body" v-html="html" ref="preview"></div>
   </div>
 </template>
 <script>
@@ -74,9 +74,27 @@
         this.cm.focus();
       }
     },
+    mounted: function () {
+      var that = this;
+      this.cm = CodeMirror.fromTextArea(document.getElementById('editor-textarea'), this.options);
+      this.cm.setValue(this.file.content);
+      this.cm.setCursor({line: 0, ch: 1000});
+      this.cm.focus();
+      this.cm.on('change', function (cm) {
+        that.contentChange(cm.getValue());
+      });
+      this.cm.on('scroll', function (cm) {
+        that.editorScoll();
+      });
+    },
     methods: {
       contentChange: function (newContent) {
         this.$emit('updateFile', this.index, newContent)
+      },
+      editorScoll: function () {
+        var top = this.cm.getScrollInfo().top;
+        console.log(top);
+        this.$refs.preview.scrollTop = top;
       },
       toggleMenu: function () {
         this.$emit('toggleMenu');
@@ -205,16 +223,6 @@
           {line: cursor.line + 3, ch: 0});
         this.cm.focus();
       }
-    },
-    mounted: function () {
-      var that = this;
-      this.cm = CodeMirror.fromTextArea(document.getElementById('editor-textarea'), this.options);
-      this.cm.setValue(this.file.content);
-      this.cm.setCursor({line: 0, ch: 1000});
-      this.cm.focus();
-      this.cm.on('change', function (cm) {
-        that.contentChange(cm.getValue());
-      });
     }
   }
 </script>
