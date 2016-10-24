@@ -25,7 +25,17 @@
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
   var uuid = require('node-uuid');
-
+  const newContent = 'New File\n---\nHello Markit!'
+  const STORAGE_KEY = 'MARKIT_LOCAL_STORAGE';
+  var fileList = localStorage.getItem(STORAGE_KEY);
+  if (!fileList || fileList.length === 0) {
+    fileList = [];
+    fileList.push({
+      cid: uuid.v1(),
+      content: newContent
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(fileList));
+  }
   export default {
     components: {
       Sidebar: Sidebar,
@@ -35,16 +45,15 @@
       return {
         menuOpened: false,
         activeFileIndex: 0,
-        fileList: [
-          {
-            cid: uuid.v1(),
-            content: 'asd0\n---\nHello sadasdasd asdasdas'
-          },
-          {
-            cid: uuid.v1(),
-            content: 'asd1\n---\nHello'
-          }
-        ]
+        fileList: JSON.parse(localStorage.getItem(STORAGE_KEY))
+      }
+    },
+    watch: {
+      fileList: {
+        handler: function (val) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(this.fileList));
+        },
+        deep: true
       }
     },
     methods: {
@@ -56,7 +65,7 @@
         this.fileList.push(
           {
             cid: uuid.v1(),
-            content: 'New File' + this.fileList.length + '\n---\nHello Markit!'
+            content: newContent
           });
         this.activeFileIndex = this.fileList.length - 1
       },
@@ -89,13 +98,8 @@
   @font-face {
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_1476881555_6268332.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('//at.alicdn.com/t/font_1476881555_6268332.woff') format('woff'), /* chrome、firefox */
-    url('//at.alicdn.com/t/font_1476881555_6268332.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-    url('//at.alicdn.com/t/font_1476881555_6268332.svg#iconfont') format('svg'); /* iOS 4.1- */
+    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1476881555_6268332.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1476881555_6268332.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1476881555_6268332.svg#iconfont') format('svg'); /* iOS 4.1- */
   }
-
-
 
   .iconfont {
     font-family: "iconfont" !important;

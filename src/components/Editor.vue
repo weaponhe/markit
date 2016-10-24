@@ -2,8 +2,9 @@
   <div class="editor clearfix">
     <div class="editor-option">
       <div class="app-opt opt-item opt-item-menu" @click="toggleMenu">
-        <i v-if="menuOpened" class="iconfont">&#xe606;</i>
-        <i v-else class="iconfont">&#xe607;</i>
+        <i class="iconfont">&#xe606;</i>
+        <!--<i v-if="menuOpened" class="iconfont">&#xe606;</i>-->
+        <!--<i v-else class="iconfont">&#xe607;</i>-->
       </div>
       <div class="app-opt opt-item opt-item-setting" @click="toggleSetting">
         <i class="iconfont">&#xe609;</i>
@@ -305,6 +306,15 @@
   .opt-item-menu {
     float: left;
     border-right: 1px solid #333;
+
+  }
+
+  .app-opt {
+    transition: transform 0.3s ease-out;;
+  }
+
+  .opened .app-opt {
+    transform: rotate(180deg);
   }
 
   .opt-item-setting {
