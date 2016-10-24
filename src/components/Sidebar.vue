@@ -34,7 +34,8 @@
     computed: {
       fileObjList: function () {
         return this.fileList.map((file) => {
-          let title = file.content.split('\n')[0]
+          var title = file.content.split(/-{3,}/)[0].trim();
+//          let title = file.content.split('\n')[0]
           return {
             title: title || 'New File'
           }

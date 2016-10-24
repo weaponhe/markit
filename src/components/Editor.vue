@@ -65,7 +65,8 @@
     },
     computed: {
       html: function () {
-        return marked(this.file.content.split('---')[1])
+        var content = this.file.content.replace(/.*\n+-{3,}\s*\n/, '');
+        return marked(content);
       }
     },
     watch: {
