@@ -1,7 +1,7 @@
 {
-  "name": "vue-codemirror",
+  "name": "markit",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A markdown editor using Vue.js.",
   "author": "weapon <weaponhe@126.com>",
   "private": true,
   "scripts": {

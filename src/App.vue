@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{opened:menuOpened}">
+  <div class="container" :class="{'sidebar-opened':sidebarOpened,'menulist-opened':menulistOpened}">
     <div class="container-sidebar">
       <Sidebar
         :fileList="fileList"
@@ -11,12 +11,17 @@
     </div>
     <div class="container-editor">
       <Editor
-        :menuOpened="menuOpened"
+        :sidebarOpened="sidebarOpened"
         :index="activeFileIndex"
         :file="fileList[activeFileIndex]"
         @updateFile="updateFile"
-        @toggleMenu="toggleMenu">
+        @toggleSidebar="toggleSidebar"
+        @toggleMenulist="toggleMenulist">
       </Editor>
+    </div>
+    <div class="container-menulist" v-if="menulistOpened">
+      <Menulist>
+      </Menulist>
     </div>
   </div>
 </template>
@@ -24,6 +29,7 @@
 <script>
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
+  import Menulist from './components/Menulist'
   var uuid = require('node-uuid');
   const newContent = 'New File\n\n-----------------------\nHello Markit!'
   const STORAGE_KEY = 'MARKIT_LOCAL_STORAGE';
@@ -39,11 +45,13 @@
   export default {
     components: {
       Sidebar: Sidebar,
-      Editor: Editor
+      Editor: Editor,
+      Menulist: Menulist
     },
     data () {
       return {
-        menuOpened: false,
+        sidebarOpened: false,
+        menulistOpened: false,
         activeFileIndex: 0,
         fileList: JSON.parse(localStorage.getItem(STORAGE_KEY))
       }
@@ -87,8 +95,12 @@
         this.fileList[index].content = content;
       },
       //OK
-      toggleMenu: function () {
-        this.menuOpened = !this.menuOpened;
+      toggleSidebar: function () {
+        this.sidebarOpened = !this.sidebarOpened;
+      },
+      //OK
+      toggleMenulist: function () {
+        this.menulistOpened = !this.menulistOpened;
       }
     }
   }
@@ -164,9 +176,27 @@
     height: 100%;
   }
 
-  .opened .container-sidebar {
+  .sidebar-opened .container-sidebar {
     left: 0;
   }
+
+  .container-menulist {
+    position: absolute;
+    z-index: 100;
+    top: 60px;
+    right: 10px;
+    box-sizing: border-box;
+    width: 200px;
+    max-height: 500px;
+  }
+
+  .sidebar-opened .container-menulist {
+    right: -370px;
+  }
+
+  /*.menulist-opened .container-menulist {*/
+  /*right: 0;*/
+  /*}*/
 
   .container-editor {
     position: absolute;
@@ -178,12 +208,13 @@
     width: 100%;
   }
 
-  .opened .container-editor {
+  .sidebar-opened .container-editor {
     left: 380px;
   }
 
   .container-sidebar,
-  .container-editor {
-    transition: left 0.3s ease-out;
+  .container-editor,
+  .container-menulist {
+    transition: all 0.3s ease-out;
   }
 </style>

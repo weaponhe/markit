@@ -1,11 +1,15 @@
 <template>
   <div class="editor clearfix">
     <div class="editor-option">
-      <div class="app-opt opt-item opt-item-menu" @click="toggleMenu">
-        <i class="iconfont">&#xe607;</i>
+      <div class="app-opt opt-item opt-item-sidebar" @click="toggleSidebar">
+        <div>
+          <i class="iconfont">&#xe607;</i>
+        </div>
       </div>
-      <div class="app-opt opt-item opt-item-setting" @click="toggleSetting">
-        <i class="iconfont">&#xe609;</i>
+      <div class="app-opt opt-item opt-item-menulist" @click="toggleMenulist">
+        <div>
+          <i class="iconfont">&#xe609;</i>
+        </div>
       </div>
       <div class="opt-group">
         <span class="editor-opt opt-item iconfont" @click="insertBold">&#xe614;</span>
@@ -39,7 +43,7 @@
   export default{
     name: 'editor',
     props: {
-      menuOpened: Boolean,
+      sidebarOpened: Boolean,
       file: Object,
       index: Number,
       options: {
@@ -96,11 +100,11 @@
         console.log(top);
         this.$refs.preview.scrollTop = top;
       },
-      toggleMenu: function () {
-        this.$emit('toggleMenu');
+      toggleSidebar: function () {
+        this.$emit('toggleSidebar');
       },
-      toggleSetting: function () {
-
+      toggleMenulist: function () {
+        this.$emit('toggleMenulist');
       },
       insertBold: function () {
         this.cm.execCommand('singleSelection');
@@ -302,21 +306,26 @@
     font-size: 18px;
   }
 
-  .opt-item-menu {
+  .opt-item-sidebar {
     float: left;
     border-right: 1px solid #333;
-
   }
 
-  .app-opt {
+  .app-opt div {
+    width: 100%;
+    height: 100%;
     transition: transform 0.3s ease-out;;
   }
 
-  .opened .app-opt {
+  .sidebar-opened .opt-item-sidebar div {
     transform: rotate(180deg);
   }
 
-  .opt-item-setting {
+  .menulist-opened .opt-item-menulist div {
+    transform: rotate(180deg);
+  }
+
+  .opt-item-menulist {
     float: right;
     border-left: 1px solid #333;
   }
