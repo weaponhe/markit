@@ -25,7 +25,7 @@
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
   var uuid = require('node-uuid');
-  const newContent = 'New File\n---\nHello Markit!'
+  const newContent = 'New File\n\n-----------------------\nHello Markit!'
   const STORAGE_KEY = 'MARKIT_LOCAL_STORAGE';
   var fileList = localStorage.getItem(STORAGE_KEY);
   if (!fileList || fileList.length === 0) {
