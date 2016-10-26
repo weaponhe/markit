@@ -27,10 +27,14 @@
         <span class="editor-opt opt-item iconfont" @click="insertUL">&#xe650;</span>
         <!--<span class="editor-opt opt-item iconfont" @click="insertTable">&#xe659;</span>-->
         <span class="editor-opt opt-item iconfont" @click="insertHR">&#xe632;</span>
+        <span class="editor-opt opt-item iconfont" @click="test">测试</span>
+        <span class="editor-opt opt-item iconfont" @click="test1">测试1</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
     <div class="editor-preview markdown-body" v-html="html" ref="preview"></div>
+    <div class="mask-black" v-if="sidebarOpened" @click="toggleSidebar"></div>
+    <div class="mask-transparent" v-if="!sidebarOpened&&menulistOpened" @click="toggleMenulist"></div>
   </div>
 </template>
 <script>
@@ -44,6 +48,7 @@
     name: 'editor',
     props: {
       sidebarOpened: Boolean,
+      menulistOpened: Boolean,
       file: Object,
       index: Number,
       options: {
@@ -92,12 +97,21 @@
       });
     },
     methods: {
+      test:function () {
+        this.$http.get('/user').then((response) => {
+          console.log(response.data);
+        }, (err) => {
+          console.error(err);
+        });
+      },
+      test1:function () {
+        this.$emit('pushMessage','测试数据1');
+      },
       contentChange: function (newContent) {
         this.$emit('updateFile', this.index, newContent)
       },
       editorScoll: function () {
         var top = this.cm.getScrollInfo().top;
-        console.log(top);
         this.$refs.preview.scrollTop = top;
       },
       toggleSidebar: function () {
@@ -236,6 +250,26 @@
     position: relative;
   }
 
+  .mask-black {
+    position: absolute;
+    z-index: 50;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .mask-transparent {
+    position: absolute;
+    z-index: 50;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+  }
+
   .editor .CodeMirror {
     position: absolute;
     top: 50px;
@@ -300,6 +334,10 @@
 
   .editor-opt {
     padding: 0 5px;
+  }
+
+  .sidebar-opened .editor-opt {
+    display: none;
   }
 
   .editor-opt .iconfont {

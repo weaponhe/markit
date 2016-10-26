@@ -12,16 +12,23 @@
     <div class="container-editor">
       <Editor
         :sidebarOpened="sidebarOpened"
+        :menulistOpened="menulistOpened"
         :index="activeFileIndex"
         :file="fileList[activeFileIndex]"
         @updateFile="updateFile"
         @toggleSidebar="toggleSidebar"
-        @toggleMenulist="toggleMenulist">
+        @toggleMenulist="toggleMenulist"
+        @pushMessage="pushMessage">
       </Editor>
     </div>
     <div class="container-menulist" v-if="menulistOpened">
       <Menulist>
       </Menulist>
+    </div>
+    <div class="container-toast">
+      <Toast :messageList="messageList"
+             @shiftMessage="shiftMessage">
+      </Toast>
     </div>
   </div>
 </template>
@@ -30,6 +37,8 @@
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
   import Menulist from './components/Menulist'
+  import Toast from './components/Toast'
+
   var uuid = require('node-uuid');
   const newContent = 'New File\n\n-----------------------\nHello Markit!'
   const STORAGE_KEY = 'MARKIT_LOCAL_STORAGE';
@@ -46,14 +55,16 @@
     components: {
       Sidebar: Sidebar,
       Editor: Editor,
-      Menulist: Menulist
+      Menulist: Menulist,
+      Toast: Toast
     },
     data () {
       return {
         sidebarOpened: false,
         menulistOpened: false,
         activeFileIndex: 0,
-        fileList: JSON.parse(localStorage.getItem(STORAGE_KEY))
+        fileList: JSON.parse(localStorage.getItem(STORAGE_KEY)),
+        messageList: []
       }
     },
     watch: {
@@ -62,9 +73,16 @@
           localStorage.setItem(STORAGE_KEY, JSON.stringify(this.fileList));
         },
         deep: true
-      }
+      },
+
     },
     methods: {
+      pushMessage: function (message) {
+        this.messageList.push(message);
+      },
+      shiftMessage: function (message) {
+        this.messageList[0] && this.messageList.shift();
+      },
       changeActive: function (index) {
         this.activeFileIndex = index
       },
@@ -136,7 +154,7 @@
     margin: 0;
     padding: 0;
     font-family: PingFang SC, Hiragino Sans GB, Microsoft Yahei, WenQuanYi Micro Hei, sans-serif;
-    /*overflow: hidden;*/
+    overflow: hidden;
   }
 
   .clearfix:before,
@@ -216,5 +234,16 @@
   .container-editor,
   .container-menulist {
     transition: all 0.3s ease-out;
+  }
+
+  .container-toast {
+    position: absolute;
+    z-index: 1000;
+    right: 100px;
+    top: 0;
+    width: 500px;
+    height: 50px;
+    /*background-color: red;*/
+    text-align: right;
   }
 </style>

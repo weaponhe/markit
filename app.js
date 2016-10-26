@@ -34,10 +34,12 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 }, function (accessToken, refreshToken, profile, done) {
   token = accessToken;
+  console.log(profile)
   return done(null, profile);
 }));
 
 var app = express();
+app.use(express.static(__dirname + '/dist'));
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -46,15 +48,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', function (req, res) {
-  res.render('index', {user: req.user});
+  res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.get('/account', function (req, res) {
-  res.render('account', {user: req.user});
-});
-
-app.get('/login', function (req, res) {
-  res.render('login', {user: req.user});
+app.get('/user', function (req, res) {
+  console.log(req.user);
+  res.json(req.user);
 });
 
 app.get('/logout', ensureAuthenticated, function (req, res) {

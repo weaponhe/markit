@@ -4,7 +4,9 @@
     <ul class="menulist-ul">
       <li>立即同步</li>
       <li class="divider"></li>
-      <li>绑定github</li>
+      <a href="/auth/github">
+        <li>绑定github</li>
+      </a>
       <li>退出</li>
     </ul>
   </div>
@@ -25,6 +27,11 @@
   }
 </script>
 <style scoped>
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .menulist {
     position: relative;
     padding: 10px 10px;
@@ -57,7 +64,7 @@
   .menulist-ul li.divider {
     height: 1px;
     background-color: #BBB;
-    margin:10px 0;
+    margin: 10px 0;
   }
 
   .menulist-ul li.divider:hover {
