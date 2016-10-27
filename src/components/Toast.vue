@@ -63,14 +63,13 @@
     vertical-align: middle;
   }
 
-  .showing {
-  }
-
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
+    transition: opacity .5s;
+    transition: top .5s;
   }
 
   .fade-enter, .fade-leave-active {
-    opacity: 0
+    opacity: 0;
+    top: -25px;
   }
 </style>

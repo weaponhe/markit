@@ -4,7 +4,7 @@
     <ul class="menulist-ul">
       <li>立即同步</li>
       <li class="divider"></li>
-      <a href="/auth/github">
+      <a href="/auth/github" @click="emit">
         <li>绑定github</li>
       </a>
       <li>退出</li>
@@ -15,13 +15,8 @@
 <script>
   export default{
     methods: {
-      selectActive: function (index) {
-        this.$emit('active', index)
-      },
-      createFile: function () {
-        this.$emit('create')
-      }, deleteFile: function (index) {
-        this.$emit('delete', index)
+      emit: function () {
+        this.$emit('startSpinning');
       }
     }
   }

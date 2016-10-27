@@ -22,13 +22,17 @@
       </Editor>
     </div>
     <div class="container-menulist" v-if="menulistOpened">
-      <Menulist>
+      <Menulist  @startSpinning="startSpinning">
       </Menulist>
     </div>
     <div class="container-toast">
       <Toast :messageList="messageList"
              @shiftMessage="shiftMessage">
       </Toast>
+    </div>
+    <div class="container-spinner" v-if="spinning">
+      <Spinner :spinning="spinning">
+      </Spinner>
     </div>
   </div>
 </template>
@@ -38,6 +42,7 @@
   import Editor from './components/Editor'
   import Menulist from './components/Menulist'
   import Toast from './components/Toast'
+  import Spinner from './components/Spinner'
 
   var uuid = require('node-uuid');
   const newContent = 'New File\n\n-----------------------\nHello Markit!'
@@ -56,7 +61,8 @@
       Sidebar: Sidebar,
       Editor: Editor,
       Menulist: Menulist,
-      Toast: Toast
+      Toast: Toast,
+      Spinner: Spinner
     },
     data () {
       return {
@@ -64,7 +70,8 @@
         menulistOpened: false,
         activeFileIndex: 0,
         fileList: JSON.parse(localStorage.getItem(STORAGE_KEY)),
-        messageList: []
+        messageList: [],
+        spinning: false
       }
     },
     watch: {
@@ -77,6 +84,13 @@
 
     },
     methods: {
+      startSpinning: function () {
+        console.log("asdasd");
+        this.spinning = true;
+      },
+      stopSpinning: function () {
+        this.spinning = false;
+      },
       pushMessage: function (message) {
         this.messageList.push(message);
       },
@@ -245,5 +259,14 @@
     height: 50px;
     /*background-color: red;*/
     text-align: right;
+  }
+
+  .container-spinner {
+    position: absolute;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
 </style>
