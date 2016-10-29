@@ -11,6 +11,7 @@
           <i class="iconfont">&#xe609;</i>
         </div>
       </div>
+      <span class="opt-item-username" v-if="user">Hi, {{user.name}}!</span>
       <div class="opt-group">
         <span class="editor-opt opt-item iconfont" @click="insertBold">&#xe614;</span>
         <span class="editor-opt opt-item iconfont" @click="insertItalic">&#xe615;</span>
@@ -25,10 +26,9 @@
       <div class="opt-group">
         <span class="editor-opt opt-item iconfont" @click="insertOL">&#xe64f;</span>
         <span class="editor-opt opt-item iconfont" @click="insertUL">&#xe650;</span>
-        <!--<span class="editor-opt opt-item iconfont" @click="insertTable">&#xe659;</span>-->
+        <span class="editor-opt opt-item iconfont" @click="insertTable">&#xe659;</span>
         <span class="editor-opt opt-item iconfont" @click="insertHR">&#xe632;</span>
         <span class="editor-opt opt-item iconfont" @click="test">测试</span>
-        <span class="editor-opt opt-item iconfont" @click="test1">测试1</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -38,8 +38,9 @@
   </div>
 </template>
 <script>
-  import CodeMirror from 'codemirror';
-
+  import CodeMirror from 'codemirror'
+  import {mapState} from 'Vuex'
+  import * as types from '../store/mutation-types'
   var marked = require('marked')
   require('codemirror/lib/codemirror.css');
   require('codemirror/theme/material.css');
@@ -47,10 +48,6 @@
   export default{
     name: 'editor',
     props: {
-      sidebarOpened: Boolean,
-      menulistOpened: Boolean,
-      file: Object,
-      index: Number,
       options: {
         type: Object,
         default: function () {
@@ -71,10 +68,18 @@
       }
     },
     computed: {
-      html: function () {
+      html(){
         var content = this.file.content.replace(/.*\n+-{3,}\s*\n/, '');
         return marked(content);
-      }
+      },
+      ...mapState({
+        spinning:'spinning',
+        sidebarOpened:'sidebarOpened',
+        menulistOpened:'menulistOpened',
+        file: state=>state.file.fileList[state.file.activeFileIndex],
+        activeFileIndex: state=> state.file.activeFileIndex,
+        user: state=>state.user.user
+      })
     },
     watch: {
       'file.cid': function (val) {
@@ -97,28 +102,20 @@
       });
     },
     methods: {
-      test:function () {
-        this.$http.get('/user').then((response) => {
-          console.log(response.data);
-        }, (err) => {
-          console.error(err);
-        });
-      },
-      test1:function () {
-        this.$emit('pushMessage','测试数据1');
+      test: function () {
       },
       contentChange: function (newContent) {
-        this.$emit('updateFile', this.index, newContent)
+        this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});
       },
       editorScoll: function () {
         var top = this.cm.getScrollInfo().top;
         this.$refs.preview.scrollTop = top;
       },
       toggleSidebar: function () {
-        this.$emit('toggleSidebar');
+        this.$store.commit(types.TOGGLE_SIDEBAR);
       },
       toggleMenulist: function () {
-        this.$emit('toggleMenulist');
+        this.$store.commit(types.TOGGLE_MENULIST);
       },
       insertBold: function () {
         this.cm.execCommand('singleSelection');
@@ -225,14 +222,14 @@
           {line: cursor.line + 1, ch: end});
         this.cm.focus();
       },
-//      insertTable: function () {
-//        this.cm.execCommand('singleSelection');
-//        this.cm.doc.replaceSelection(
-//          '\n\n| | |' + '\n| ------------ | ------------ |' + '\n| | |' + '\n', 'start');
-////        this.cm.setSelection(
-////          {line: cursor.line + 3, ch: 0});
-//        this.cm.focus();
-//      },
+      insertTable: function () {
+        this.cm.execCommand('singleSelection');
+        this.cm.doc.replaceSelection(
+          '\n\n| | |' + '\n| ------------ | ------------ |' + '\n| | |' + '\n', 'start');
+//        this.cm.setSelection(
+//          {line: cursor.line + 3, ch: 0});
+        this.cm.focus();
+      },
       insertHR: function () {
         this.cm.execCommand('singleSelection');
         this.cm.doc.replaceSelection('\n\n--------------\n\n', 'start');
@@ -347,6 +344,12 @@
   .opt-item-sidebar {
     float: left;
     border-right: 1px solid #333;
+  }
+
+  .opt-item-username {
+    float: right;
+    line-height: 50px;
+    margin-right: 20px;
   }
 
   .app-opt div {

@@ -1,6 +1,8 @@
 <template>
   <div class="sidebar">
-    <div class="sidebar-header"></div>
+    <div class="sidebar-header">
+      <img v-if="user" :src="user.avatar_url">
+    </div>
     <ul>
       <li v-for="(file,index) in fileObjList"
           :class="{active:activeFileIndex===index}"
@@ -19,28 +21,43 @@
 </template>
 
 <script>
+  import * as types from '../store/mutation-types'
+  import {mapState} from 'vuex'
   export default{
-    props: ['fileList', 'activeFileIndex'],
     methods: {
       selectActive: function (index) {
-        this.$emit('active', index)
+        this.$store.commit(types.FILE_CHANGE_ACTIVE, index)
       },
       createFile: function () {
-        this.$emit('create')
-      }, deleteFile: function (index) {
-        this.$emit('delete', index)
+        this.$store.commit(types.FILE_CREATE)
+      },
+      deleteFile: function (index) {
+        this.$store.commit(types.FILE_DELETE, index)
       }
     },
     computed: {
-      fileObjList: function () {
+      fileObjList() {
         return this.fileList.map((file) => {
           var title = file.content.split(/-{3,}/)[0].trim();
-//          let title = file.content.split('\n')[0]
           return {
             title: title || 'New File'
           }
         })
-      }
+      },
+      ...mapState({
+        activeFileIndex: state=> state.file.activeFileIndex,
+        fileList: state=>state.file.fileList,
+        user: state=>state.user.user
+      })
+//      activeFileIndex(){
+//        return this.$store.state.file.activeFileIndex
+//      },
+//      fileList(){
+//        return this.$store.state.file.fileList
+//      },
+//      user(){
+//        return this.$store.state.user.user
+//      }
     }
   }
 </script>
@@ -59,6 +76,15 @@
     height: 50px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     background-color: #475160;
+    text-align: center;
+    line-height: 50px;
+    font-size: 0;
+  }
+
+  .sidebar-header img {
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
   }
 
   .sidebar-footer {

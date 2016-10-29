@@ -6,8 +6,8 @@
 
 <script>
   export default {
-    props: {
-      spinning: {type: Boolean, default: false}
+    computed: {
+
     }
   }
 </script>

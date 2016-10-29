@@ -1,0 +1,15 @@
+export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
+export const TOGGLE_MENULIST = 'TOGGLE_MENULIST'
+
+export const USER_LOGIN = 'USER_LOGIN'
+export const USER_LOGOUT = 'USER_LOGOUT'
+
+export const MESSAGE_PUSH = 'MESSAGE_PUSH'
+export const MESSAGE_SHIFT = 'MESSAGE_SHIFT'
+
+export const FILE_CREATE = 'FILE_CREATE'
+export const FILE_UPDATE = 'FILE_UPDATE'
+export const FILE_DELETE = 'FILE_DELETE'
+export const FILE_CHANGE_ACTIVE = 'FILE_CHANGE_ACTIVE'
+
+

@@ -34,11 +34,11 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 }, function (accessToken, refreshToken, profile, done) {
   token = accessToken;
-  console.log(profile)
   return done(null, profile);
 }));
 
 var app = express();
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/dist'));
 app.set('views', __dirname + '/views')
 app.set('view engine', 'ejs');
@@ -52,13 +52,18 @@ app.get('/', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-  console.log(req.user);
   res.json(req.user);
 });
 
 app.get('/logout', ensureAuthenticated, function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.json({success: true});
+});
+
+app.post('/sync', ensureAuthenticated, function (req, res) {
+  console.log(req.body);
+  github.repos.createFile({ ... });
+  res.json({success: true});
 });
 
 app.get('/auth/github',
@@ -67,44 +72,43 @@ app.get('/auth/github',
   }
 );
 
-
 app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/login'}),
   function (req, res) {
     res.redirect('/');
   }
 );
-var options = {
-  hostname: 'api.github.com',
-  port: 80,
-  path: '/repos/twbs/bootstrap',
-  method: 'GET'
-};
-app.get('/github', function (req, res) {
-  github.authenticate({
-    type: "oauth",
-    token: token
-  });
-  console.log(token);
-  github.repos.createFile({
-    owner: 'yumjs',
-    repo: 'test',
-    path: 'abc.txt',
-    // name:'abc.txt',
-    message: 'asasdasdasd',
-    content: new Buffer("Hello World").toString('base64')
-  }, function (err, result) {
-    if (err) {
-      console.log('!!!!!!!!!!!!!!!!!');
-      console.log(err);
-      console.log('!!!!!!!!!!!!!!!!!');
-    }
-    console.log('======================');
-    console.log(result);
-    console.log('======================');
-  });
-  res.redirect('/');
-});
+// var options = {
+//   hostname: 'api.github.com',
+//   port: 80,
+//   path: '/repos/twbs/bootstrap',
+//   method: 'GET'
+// };
+// app.get('/github', function (req, res) {
+//   github.authenticate({
+//     type: "oauth",
+//     token: token
+//   });
+//   console.log(token);
+//   github.repos.createFile({
+//     owner: 'yumjs',
+//     repo: 'test',
+//     path: 'abc.txt',
+//     // name:'abc.txt',
+//     message: 'asasdasdasd',
+//     content: new Buffer("Hello World").toString('base64')
+//   }, function (err, result) {
+//     if (err) {
+//       console.log('!!!!!!!!!!!!!!!!!');
+//       console.log(err);
+//       console.log('!!!!!!!!!!!!!!!!!');
+//     }
+//     console.log('======================');
+//     console.log(result);
+//     console.log('======================');
+//   });
+//   res.redirect('/');
+// });
 
 app.listen(3000);
 

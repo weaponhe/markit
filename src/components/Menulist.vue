@@ -2,21 +2,42 @@
   <div class="menulist">
     <!--<div class="sidebar-header"></div>-->
     <ul class="menulist-ul">
-      <li>立即同步</li>
+      <!--<template v-if="user">-->
+      <!--<a href="" @click="sync">-->
+      <li @click="sync">立即同步</li>
+      <!--</a>-->
+      <li>设置</li>
       <li class="divider"></li>
-      <a href="/auth/github" @click="emit">
-        <li>绑定github</li>
+      <li @click="logout">退出</li>
+      <!--</template>-->
+      <!--<template v-else>-->
+      <a href="/auth/github" @click="login">
+        <li>github登录</li>
       </a>
-      <li>退出</li>
+      <!--</template>-->
     </ul>
   </div>
 </template>
 
 <script>
+  import * as types from '../store/mutation-types'
   export default{
     methods: {
-      emit: function () {
-        this.$emit('startSpinning');
+      sync () {
+        this.$store.commit(types.MESSAGE_PUSH, '正在同步')
+        this.$store.dispatch('sync')
+      },
+      login(){
+        this.$store.commit('toggleSpinning')
+        this.$store.dispatch('login')
+      },
+      logout(){
+        this.$store.dispatch('logout')
+      }
+    },
+    computed: {
+      user(){
+        return this.$store.state.user.user
       }
     }
   }

@@ -1,20 +1,24 @@
 <template>
   <transition name="fade">
-    <div class="toast" v-if="showing">
+    <div class="toast" v-show="showing">
       {{messageList[0]}}
     </div>
   </transition>
 </template>
 
 <script>
+
+  import * as types from '../store/mutation-types'
   export default {
     data: function () {
       return {
         showing: false
       }
     },
-    props: {
-      messageList: Array
+    computed: {
+      messageList(){
+        return this.$store.state.message.messageList
+      }
     },
     watch: {
       'messageList.length': {
@@ -26,19 +30,15 @@
             setTimeout(()=> {
               that.showing = true;
               setTimeout(()=> {
-                that.$emit('shiftMessage');
+                this.$store.commit(types.MESSAGE_SHIFT, '正在同步')
               }, 2000);
             }, 2000);
           } else if (val === 1 && oldVal === 0) {
             this.showing = true;
             setTimeout(()=> {
-              that.$emit('shiftMessage');
+              this.$store.commit(types.MESSAGE_SHIFT, '正在同步')
             }, 2000);
           }
-//          else if(val === 0 && oldVal === 1){
-//            this.showing = true;
-//          }
-          console.log(val);
         },
         deep: true
       }
@@ -72,4 +72,5 @@
     opacity: 0;
     top: -25px;
   }
+
 </style>

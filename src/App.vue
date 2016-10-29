@@ -1,139 +1,45 @@
 <template>
   <div class="container" :class="{'sidebar-opened':sidebarOpened,'menulist-opened':menulistOpened}">
     <div class="container-sidebar">
-      <Sidebar
-        :fileList="fileList"
-        :activeFileIndex="activeFileIndex"
-        @active="changeActive"
-        @create="createFile"
-        @delete="deleteFile">
-      </Sidebar>
+      <Sidebar></Sidebar>
     </div>
     <div class="container-editor">
-      <Editor
-        :sidebarOpened="sidebarOpened"
-        :menulistOpened="menulistOpened"
-        :index="activeFileIndex"
-        :file="fileList[activeFileIndex]"
-        @updateFile="updateFile"
-        @toggleSidebar="toggleSidebar"
-        @toggleMenulist="toggleMenulist"
-        @pushMessage="pushMessage">
-      </Editor>
+      <Editor></Editor>
     </div>
     <div class="container-menulist" v-if="menulistOpened">
-      <Menulist  @startSpinning="startSpinning">
-      </Menulist>
+      <Menulist></Menulist>
     </div>
     <div class="container-toast">
-      <Toast :messageList="messageList"
-             @shiftMessage="shiftMessage">
-      </Toast>
+      <Toast></Toast>
     </div>
     <div class="container-spinner" v-if="spinning">
-      <Spinner :spinning="spinning">
-      </Spinner>
+      <Spinner></Spinner>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
   import Menulist from './components/Menulist'
   import Toast from './components/Toast'
   import Spinner from './components/Spinner'
 
-  var uuid = require('node-uuid');
-  const newContent = 'New File\n\n-----------------------\nHello Markit!'
-  const STORAGE_KEY = 'MARKIT_LOCAL_STORAGE';
-  var fileList = localStorage.getItem(STORAGE_KEY);
-  if (!fileList || fileList.length === 0) {
-    fileList = [];
-    fileList.push({
-      cid: uuid.v1(),
-      content: newContent
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(fileList));
-  }
   export default {
     components: {
-      Sidebar: Sidebar,
-      Editor: Editor,
-      Menulist: Menulist,
-      Toast: Toast,
-      Spinner: Spinner
+      Sidebar,
+      Editor,
+      Menulist,
+      Toast,
+      Spinner
     },
-    data () {
-      return {
-        sidebarOpened: false,
-        menulistOpened: false,
-        activeFileIndex: 0,
-        fileList: JSON.parse(localStorage.getItem(STORAGE_KEY)),
-        messageList: [],
-        spinning: false
-      }
+    computed: {
+      ...mapState(['spinning', 'sidebarOpened', 'menulistOpened'])
     },
-    watch: {
-      fileList: {
-        handler: function (val) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(this.fileList));
-        },
-        deep: true
-      },
-
-    },
-    methods: {
-      startSpinning: function () {
-        console.log("asdasd");
-        this.spinning = true;
-      },
-      stopSpinning: function () {
-        this.spinning = false;
-      },
-      pushMessage: function (message) {
-        this.messageList.push(message);
-      },
-      shiftMessage: function (message) {
-        this.messageList[0] && this.messageList.shift();
-      },
-      changeActive: function (index) {
-        this.activeFileIndex = index
-      },
-      //OK
-      createFile: function () {
-        this.fileList.push(
-          {
-            cid: uuid.v1(),
-            content: newContent
-          });
-        this.activeFileIndex = this.fileList.length - 1
-      },
-      //OK
-      deleteFile: function (index) {
-        this.fileList.splice(index, 1);
-        if (this.fileList.length === 0) {
-          this.createFile();
-        } else {
-          if (index === this.activeFileIndex) {
-            this.activeFileIndex = 0;
-          } else if (index < this.activeFileIndex) {
-            this.activeFileIndex--;
-          }
-        }
-      },
-      //OK
-      updateFile: function (index, content) {
-        this.fileList[index].content = content;
-      },
-      //OK
-      toggleSidebar: function () {
-        this.sidebarOpened = !this.sidebarOpened;
-      },
-      //OK
-      toggleMenulist: function () {
-        this.menulistOpened = !this.menulistOpened;
-      }
+    mounted(){
+      this.$store.dispatch('login')
     }
   }
 </script>
