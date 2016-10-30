@@ -37,9 +37,6 @@
     },
     computed: {
       ...mapState(['spinning', 'sidebarOpened', 'menulistOpened'])
-    },
-    mounted(){
-      this.$store.dispatch('login')
     }
   }
 </script>

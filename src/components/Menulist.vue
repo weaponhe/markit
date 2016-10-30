@@ -11,7 +11,7 @@
       <li @click="logout">退出</li>
       <!--</template>-->
       <!--<template v-else>-->
-      <a href="/auth/github" @click="login">
+      <a href="http://127.0.0.1:3000/auth/github" @click="login">
         <li>github登录</li>
       </a>
       <!--</template>-->

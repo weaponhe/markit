@@ -4,12 +4,23 @@ import Vue from 'vue'
 import VueResource  from 'vue-resource'
 import App from './App'
 import store from './store'
-
+import  * as types from './store/mutation-types'
 Vue.use(VueResource);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created()
+  {
+    var access_token;
+    var queryStr = location.search.slice(1);
+    if (queryStr) {
+      var query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+      this.$store.commit(types.USERNAME, query.username)
+      this.$store.commit(types.TOKEN, query.token)
+      this.$store.dispatch('getUser')
+    }
+  }
 })

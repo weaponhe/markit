@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import * as types from './mutation-types'
+import * as githubAPI from '../github'
 
-export const login = (context) => {
-  Vue.http.get('/user')
+
+export const getUser = ({state, commit}) => {
+  Vue.http.get('https://api.github.com/users/' + state.username)
     .then((response) => {
-      let user = response.data._json
-      user && context.commit(types.USER_LOGIN, user);
+      let user = response.data
+      user && commit(types.USER_LOGIN, user);
     })
 }
 
@@ -16,9 +18,10 @@ export const logout = (context) => {
     })
 }
 
-export const sync = (context) => {
-  Vue.http.post('/sync', context.state.file.fileList)
-    .then((response) => {
-      console.log(response.data)
+export const sync = ({state, commit}) => {
+  githubAPI.deleteFiles(state, ()=> {
+    githubAPI.createFiles(state, ()=> {
+      commit(types.MESSAGE_PUSH, '同步完成')
     })
+  })
 }

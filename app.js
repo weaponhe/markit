@@ -34,6 +34,10 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
 }, function (accessToken, refreshToken, profile, done) {
   token = accessToken;
+  github.authenticate({
+    type: "oauth",
+    token: token
+  });
   return done(null, profile);
 }));
 
@@ -52,6 +56,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
+  // console.log(req.user);
   res.json(req.user);
 });
 
@@ -60,9 +65,43 @@ app.get('/logout', ensureAuthenticated, function (req, res) {
   res.json({success: true});
 });
 
+
 app.post('/sync', ensureAuthenticated, function (req, res) {
-  console.log(req.body);
-  github.repos.createFile({ ... });
+  // console.log('!! ', req.user)
+  var owner = req.user.username;
+  var repo = 'test';
+  var path = 'o0509sasd16.txt';
+  // github.repos.createFile({
+  //   owner: owner,
+  //   repo: repo,
+  //   path: path,
+  //   message: 'asasdasdasd',
+  //   content: new Buffer("Hello World").toString('base64')
+  // });
+  // github.repos.getContent({
+  //   owner: owner,
+  //   repo: repo,
+  //   path: path,
+  // }, function (err, response) {
+  //   console.log('========================')
+  //   console.log(response.sha)
+  //   console.log('========================')
+  // });
+  // github.repos.updateFile({
+  //   owner: owner,
+  //   repo: repo,
+  //   path: path,
+  //   message: 'asasdasdasd',
+  //   content: new Buffer("Hello Vuejs!").toString('base64')
+  // });
+  github.repos.getPaths({
+    owner: owner,
+    repo: repo
+  }, function (err, response) {
+    console.log('========================')
+    console.log(response)
+    console.log('========================')
+  });
   res.json({success: true});
 });
 
@@ -75,7 +114,7 @@ app.get('/auth/github',
 app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/login'}),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('http://127.0.0.1:8080/?token=' + token+'&username='+req.user.username);
   }
 );
 // var options = {

@@ -11,7 +11,7 @@
           <i class="iconfont">&#xe609;</i>
         </div>
       </div>
-      <span class="opt-item-username" v-if="user">Hi, {{user.name}}!</span>
+      <span class="opt-item-username" v-if="user">Hi, {{user.login}}!</span>
       <div class="opt-group">
         <span class="editor-opt opt-item iconfont" @click="insertBold">&#xe614;</span>
         <span class="editor-opt opt-item iconfont" @click="insertItalic">&#xe615;</span>
@@ -73,9 +73,9 @@
         return marked(content);
       },
       ...mapState({
-        spinning:'spinning',
-        sidebarOpened:'sidebarOpened',
-        menulistOpened:'menulistOpened',
+        spinning: 'spinning',
+        sidebarOpened: 'sidebarOpened',
+        menulistOpened: 'menulistOpened',
         file: state=>state.file.fileList[state.file.activeFileIndex],
         activeFileIndex: state=> state.file.activeFileIndex,
         user: state=>state.user.user

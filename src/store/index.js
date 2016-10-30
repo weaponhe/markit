@@ -11,7 +11,9 @@ Vue.use(Vuex);
 const state = {
   spinning: false,
   sidebarOpened: false,
-  menulistOpened: false
+  menulistOpened: false,
+  username: '',
+  token: ''
 }
 
 const mutations = {
@@ -23,6 +25,12 @@ const mutations = {
   },
   [types.TOGGLE_MENULIST](state){
     state.menulistOpened = !state.menulistOpened
+  },
+  [types.USERNAME](state, username){
+    state.username = username
+  },
+  [types.TOKEN](state, token){
+    state.token = token
   }
 }
 
