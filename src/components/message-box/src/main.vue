@@ -6,30 +6,17 @@
 
           <div class="modal-header">
             <slot name="header">
-              确认
+              {{title}}
             </slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
+            {{message}}
           </div>
 
           <div class="modal-footer">
-            <slot name="footer">
-              <button class="button button-default" @click="$emit('close')">
-                取消
-              </button>
-              <button class="button button-success" @click="$emit('close')">
-                取消
-              </button>
-              <button class="button button-danger" @click="$emit('close')">
-                取消
-              </button>
-            </slot>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -38,15 +25,18 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex'
   export default {
     data () {
-      return {}
-    },
-    computed: {
-      ...mapState(['modalOpened'])
+      return {
+        title: '',
+        message: '',
+        type: '',
+        showConfirmButton: true,
+        showCancelButton: false,
+        show: false,
+        handle: null
+      }
     }
-
   }
 </script>
 
@@ -123,10 +113,10 @@
   }
 
   .button-default {
-     background-color: #fff;
-     border: 1px solid #ccc;
-     color: #666;
-   }
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #666;
+  }
 
   .button-default:hover {
     border: 1px solid #adadad;;

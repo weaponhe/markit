@@ -1,5 +1,6 @@
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
 export const TOGGLE_MENULIST = 'TOGGLE_MENULIST'
+export const TOGGLE_MODAL = 'TOGGLE_MODAL'
 export const USERNAME = 'USERNAME'
 export const TOKEN = 'TOKEN'
 

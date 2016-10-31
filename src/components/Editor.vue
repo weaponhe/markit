@@ -103,6 +103,8 @@
     },
     methods: {
       test: function () {
+//        this.$store.commit(types.TOGGLE_MODAL)
+        this.$alert();
       },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});

@@ -7,6 +7,12 @@ import store from './store'
 import  * as types from './store/mutation-types'
 Vue.use(VueResource);
 
+import MessageBox from './components/message-box'
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$prompt = MessageBox.prompt
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
