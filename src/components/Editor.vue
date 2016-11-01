@@ -28,7 +28,9 @@
         <span class="editor-opt opt-item iconfont" @click="insertUL">&#xe650;</span>
         <span class="editor-opt opt-item iconfont" @click="insertTable">&#xe659;</span>
         <span class="editor-opt opt-item iconfont" @click="insertHR">&#xe632;</span>
-        <span class="editor-opt opt-item iconfont" @click="test">测试</span>
+        <span class="editor-opt opt-item iconfont" @click="test1">alert</span>
+        <span class="editor-opt opt-item iconfont" @click="test2">prompt</span>
+        <span class="editor-opt opt-item iconfont" @click="test3">confirm</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -102,9 +104,32 @@
       });
     },
     methods: {
-      test: function () {
-//        this.$store.commit(types.TOGGLE_MODAL)
-        this.$alert();
+      test1: function () {
+        this.$alert('Alert', 'content', {})
+          .then(res=> {
+            console.log(res)
+          })
+          .catch(res=> {
+            console.log(res)
+          });
+      },
+      test2: function () {
+        this.$prompt('Prompt', 'content', {})
+          .then(res=> {
+            console.log(res)
+          })
+          .catch(res=> {
+            console.log(res)
+          });
+      },
+      test3: function () {
+        this.$confirm('confirm', 'content', {})
+          .then(res=> {
+            console.log(res)
+          })
+          .catch(res=> {
+            console.log(res)
+          });
       },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});

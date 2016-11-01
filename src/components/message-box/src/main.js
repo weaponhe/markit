@@ -11,7 +11,8 @@ let
     message: '消息',
     showClose: true,
     showConfirmButton: true,
-    showCancelButton: false
+    showCancelButton: false,
+    showInput: false
   };
 
 const
@@ -40,7 +41,7 @@ const showNextMsg = () => {
 }
 
 const MessageBox = function (options) {
-  return Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     msgQueue.push({
       options: merge({}, defaults, options),
       resolve: resolve,
@@ -49,20 +50,33 @@ const MessageBox = function (options) {
     showNextMsg();
   });
 }
+
 MessageBox.alert = (title, message, options)=> {
   return MessageBox(merge({
+    type: 'alert',
     title: title,
     message: message,
-    type: 'alert'
   }, options));
 }
 MessageBox.confirm = (title, message, options)=> {
-  MessageBox();
+  return MessageBox(merge({
+    type: 'confirm',
+    title: title,
+    message: message,
+    showCancelButton: true,
+  }, options));
 }
 
 MessageBox.prompt = (title, message, options)=> {
-  MessageBox();
+  return MessageBox(merge({
+    type: 'prompt',
+    title: title,
+    message: message,
+    showCancelButton: true,
+    showInput: true
+  }, options));
 }
+
 
 export default MessageBox;
 export {MessageBox};

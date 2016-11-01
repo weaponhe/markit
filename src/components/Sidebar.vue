@@ -32,12 +32,15 @@
         this.$store.commit(types.FILE_CREATE)
       },
       deleteFile: function (index) {
-        this.$store.commit(types.FILE_DELETE, index)
+        this.$confirm('提示', '删除文件，是否继续？').then(response=> {
+          this.$store.commit(types.FILE_DELETE, index);
+        }).catch(response=> {
+        })
       }
     },
     computed: {
       fileObjList() {
-        return this.fileList.map((file) => {
+        return this.fileList.map((file)=> {
           var title = file.content.split(/-{3,}/)[0].trim();
           return {
             title: title || 'New File'
