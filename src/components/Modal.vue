@@ -18,15 +18,16 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="button button-default" @click="$emit('close')">
-                取消
-              </button>
-              <button class="button button-success" @click="$emit('close')">
-                取消
-              </button>
-              <button class="button button-danger" @click="$emit('close')">
-                取消
-              </button>
+              <!--<button class="button button-default" @click="$emit('close')">-->
+                <!--取消-->
+              <!--</button>-->
+              <!--<button class="button button-success" @click="$emit('close')">-->
+                <!--取消-->
+              <!--</button>-->
+              <!--<button class="button button-danger" @click="$emit('close')">-->
+                <!--取消-->
+              <!--</button>-->
+              <my-button>确定</my-button>
             </slot>
           </div>
 
@@ -39,7 +40,11 @@
 
 <script>
   import {mapState} from 'vuex'
+  import myButton from './Button'
   export default {
+    components:{
+      myButton
+    },
     data () {
       return {}
     },
@@ -50,7 +55,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .modal-wrapper {
     position: absolute;
     z-index: 100000;
@@ -100,50 +105,50 @@
     padding: 0 10px;
   }
 
-  .button {
-    height: 30px;
-    border-radius: 3px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    letter-spacing: 2px;
-    text-align: center;
-    padding: 0 10px;
-  }
+  /*.button {*/
+    /*height: 30px;*/
+    /*border-radius: 3px;*/
+    /*font-size: 16px;*/
+    /*font-weight: bold;*/
+    /*cursor: pointer;*/
+    /*letter-spacing: 2px;*/
+    /*text-align: center;*/
+    /*padding: 0 10px;*/
+  /*}*/
 
-  .button-success {
-    background-color: #42b983;
-    border: 1px solid #42b983;
-    color: #fff;
-  }
+  /*.button-success {*/
+    /*background-color: #42b983;*/
+    /*border: 1px solid #42b983;*/
+    /*color: #fff;*/
+  /*}*/
 
-  .button-success:hover {
-    background-color: #398439;
-    border: 1px solid #398439;
-  }
+  /*.button-success:hover {*/
+    /*background-color: #398439;*/
+    /*border: 1px solid #398439;*/
+  /*}*/
 
-  .button-default {
-     background-color: #fff;
-     border: 1px solid #ccc;
-     color: #666;
-   }
+  /*.button-default {*/
+     /*background-color: #fff;*/
+     /*border: 1px solid #ccc;*/
+     /*color: #666;*/
+   /*}*/
 
-  .button-default:hover {
-    border: 1px solid #adadad;;
-    color: #333;
-    background-color: #e6e6e6;
-  }
+  /*.button-default:hover {*/
+    /*border: 1px solid #adadad;;*/
+    /*color: #333;*/
+    /*background-color: #e6e6e6;*/
+  /*}*/
 
-  .button-danger {
-    background-color: #d43f3a;
-    border: 1px solid #d43f3a;
-    color: #FFF;
-  }
+  /*.button-danger {*/
+    /*background-color: #d43f3a;*/
+    /*border: 1px solid #d43f3a;*/
+    /*color: #FFF;*/
+  /*}*/
 
-  .button-danger:hover {
-    border: 1px solid #b3221d;
-    background-color: #b3221d;
-  }
+  /*.button-danger:hover {*/
+    /*border: 1px solid #b3221d;*/
+    /*background-color: #b3221d;*/
+  /*}*/
 
   .fade-enter, .fade-leave-active {
     transform: scale(1.1);

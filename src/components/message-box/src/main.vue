@@ -14,8 +14,8 @@
             </div>
           </div>
           <div class="message-box__footer">
-            <button v-if="showConfirmButton" @click="handleAction('comfirm')">确定</button>
-            <button v-if="showCancelButton" @click="handleAction('cancel')">取消</button>
+            <my-button v-if="showConfirmButton" @click="handleAction('comfirm')" type="primary">确定</my-button>
+            <my-button v-if="showCancelButton" @click="handleAction('cancel')">取消</my-button>
           </div>
         </div>
       </div>
@@ -24,7 +24,11 @@
 </template>
 
 <script>
+  import myButton from '../../Button'
   export default {
+    components: {
+      myButton
+    },
     data () {
       return {
         title: '',
@@ -106,48 +110,48 @@
   }
 
   /*.button {*/
-    /*height: 30px;*/
-    /*border-radius: 3px;*/
-    /*font-size: 16px;*/
-    /*font-weight: bold;*/
-    /*cursor: pointer;*/
-    /*letter-spacing: 2px;*/
-    /*text-align: center;*/
-    /*padding: 0 10px;*/
+  /*height: 30px;*/
+  /*border-radius: 3px;*/
+  /*font-size: 16px;*/
+  /*font-weight: bold;*/
+  /*cursor: pointer;*/
+  /*letter-spacing: 2px;*/
+  /*text-align: center;*/
+  /*padding: 0 10px;*/
   /*}*/
 
   /*.button-success {*/
-    /*background-color: #42b983;*/
-    /*border: 1px solid #42b983;*/
-    /*color: #fff;*/
+  /*background-color: #42b983;*/
+  /*border: 1px solid #42b983;*/
+  /*color: #fff;*/
   /*}*/
 
   /*.button-success:hover {*/
-    /*background-color: #398439;*/
-    /*border: 1px solid #398439;*/
+  /*background-color: #398439;*/
+  /*border: 1px solid #398439;*/
   /*}*/
 
   /*.button-default {*/
-    /*background-color: #fff;*/
-    /*border: 1px solid #ccc;*/
-    /*color: #666;*/
+  /*background-color: #fff;*/
+  /*border: 1px solid #ccc;*/
+  /*color: #666;*/
   /*}*/
 
   /*.button-default:hover {*/
-    /*border: 1px solid #adadad;;*/
-    /*color: #333;*/
-    /*background-color: #e6e6e6;*/
+  /*border: 1px solid #adadad;;*/
+  /*color: #333;*/
+  /*background-color: #e6e6e6;*/
   /*}*/
 
   /*.button-danger {*/
-    /*background-color: #d43f3a;*/
-    /*border: 1px solid #d43f3a;*/
-    /*color: #FFF;*/
+  /*background-color: #d43f3a;*/
+  /*border: 1px solid #d43f3a;*/
+  /*color: #FFF;*/
   /*}*/
 
   /*.button-danger:hover {*/
-    /*border: 1px solid #b3221d;*/
-    /*background-color: #b3221d;*/
+  /*border: 1px solid #b3221d;*/
+  /*background-color: #b3221d;*/
   /*}*/
 
   .fade-enter, .fade-leave-active {

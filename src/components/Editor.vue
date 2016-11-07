@@ -31,6 +31,7 @@
         <span class="editor-opt opt-item iconfont" @click="test1">alert</span>
         <span class="editor-opt opt-item iconfont" @click="test2">prompt</span>
         <span class="editor-opt opt-item iconfont" @click="test3">confirm</span>
+        <my-button>asdasd</my-button>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -43,13 +44,19 @@
   import CodeMirror from 'codemirror'
   import {mapState} from 'Vuex'
   import * as types from '../store/mutation-types'
+  import  myButton from './Button'
   var marked = require('marked')
   require('codemirror/lib/codemirror.css');
   require('codemirror/theme/material.css');
   require('github-markdown-css/github-markdown.css');
+
+
   export default{
     name: 'editor',
-    props: {
+    components: {
+      myButton
+    },
+      props: {
       options: {
         type: Object,
         default: function () {
