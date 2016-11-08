@@ -55,6 +55,7 @@ const mutations = {
       }
     }
     saveFilelistLocally(state.fileList);
+    saveActiveIndexLocally(state.activeFileIndex);
   },
   [types.FILE_CHANGE_ACTIVE]  (state, index) {
     state.activeFileIndex = index
