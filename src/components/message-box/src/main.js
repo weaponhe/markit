@@ -4,23 +4,18 @@ let merge = require('../../../util/merge');
 let
   instance,
   msgQueue = [],
-  currentMsg,
-
-  defaults = {
-    title: '提示',
-    message: '消息',
-    showClose: true,
-    showConfirmButton: true,
-    showCancelButton: false,
-    showInput: false
-  };
+  currentMsg
 
 const
   MessageBoxConstructor = Vue.extend(msgboxVue);
 
 const handle = action => {
-  if (action === 'comfirm') {
-    currentMsg.resolve(action)
+  if (action === 'confirm') {
+    if (instance.type === 'prompt') {
+      currentMsg.resolve({action, value: instance.inputContent})
+    } else {
+      currentMsg.resolve(action)
+    }
   } else if (action === 'cancel') {
     currentMsg.reject(action)
   }
@@ -43,9 +38,9 @@ const showNextMsg = () => {
 const MessageBox = function (options) {
   return new Promise((resolve, reject) => {
     msgQueue.push({
-      options: merge({}, defaults, options),
-      resolve: resolve,
-      reject: reject
+      options,
+      resolve,
+      reject
     });
     showNextMsg();
   });

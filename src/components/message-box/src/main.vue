@@ -5,16 +5,16 @@
         <div class="message-box__box">
           <div class="message-box__header clearfix" v-if=" title !== '' ">
             <div class="message-box__title"><h3>{{title}}</h3></div>
-            <i class="iconfont message-box__close" @click="handleAction('cancel')" v-if="showClose">&#xe60b;</i>
+            <i class="iconfont message-box__close" @click="handleAction('cancel')" v-if="showClose">&#xe736;</i>
           </div>
           <div class="message-box__content">
             <div class="message-box__message" v-if=" message !== '' ">{{message}}</div>
             <div class="message-box__input" v-if="showInput">
-              <input type="text">
+              <input v-model="inputContent" type="text">
             </div>
           </div>
           <div class="message-box__footer">
-            <my-button v-if="showConfirmButton" @click="handleAction('comfirm')" type="primary">确定</my-button>
+            <my-button v-if="showConfirmButton" @click="handleAction('confirm')" type="primary">确定</my-button>
             <my-button v-if="showCancelButton" @click="handleAction('cancel')">取消</my-button>
           </div>
         </div>
@@ -37,8 +37,10 @@
         showConfirmButton: true,
         showCancelButton: false,
         showInput: false,
+        inputContent: '',
+        showClose: true,
         show: false,
-        handle: null
+        handle: null,
       }
     },
     methods: {
@@ -76,12 +78,12 @@
     margin-left: -250px;
     padding: 15px;
     background-color: #FFF;
-    transition: all .2s ease
+    transition: all .2s ease;
+    color: #475669;
   }
 
   .message-box__header {
-    /*border-bottom: 1px solid #eee;*/
-    /*padding: 10px 10px;*/
+
   }
 
   .message-box__title {
@@ -94,65 +96,33 @@
   }
 
   .message-box__close {
+    cursor: pointer;
     float: right;
+    font-size: 20px;
+  }
+
+  .message-box__close:hover {
+    color: #CCC;
   }
 
   .message-box__content {
     margin: 20px 0;
   }
 
-  .message-box__footer {
-    /*height: 50px;*/
-    /*line-height: 50px;*/
-    /*border-top: 1px solid #eee;*/
-    text-align: right;
-    /*padding: 0 10px;*/
+  .message-box__input input{
+    border: 1px solid #CCC;
+    height: 35px;
+    line-height: 25px;
+    font-size: 16px;
+    margin: 20px 0;
+    width: 95%;
+    border-radius: 3px;
+    text-indent: 10px;
   }
 
-  /*.button {*/
-  /*height: 30px;*/
-  /*border-radius: 3px;*/
-  /*font-size: 16px;*/
-  /*font-weight: bold;*/
-  /*cursor: pointer;*/
-  /*letter-spacing: 2px;*/
-  /*text-align: center;*/
-  /*padding: 0 10px;*/
-  /*}*/
-
-  /*.button-success {*/
-  /*background-color: #42b983;*/
-  /*border: 1px solid #42b983;*/
-  /*color: #fff;*/
-  /*}*/
-
-  /*.button-success:hover {*/
-  /*background-color: #398439;*/
-  /*border: 1px solid #398439;*/
-  /*}*/
-
-  /*.button-default {*/
-  /*background-color: #fff;*/
-  /*border: 1px solid #ccc;*/
-  /*color: #666;*/
-  /*}*/
-
-  /*.button-default:hover {*/
-  /*border: 1px solid #adadad;;*/
-  /*color: #333;*/
-  /*background-color: #e6e6e6;*/
-  /*}*/
-
-  /*.button-danger {*/
-  /*background-color: #d43f3a;*/
-  /*border: 1px solid #d43f3a;*/
-  /*color: #FFF;*/
-  /*}*/
-
-  /*.button-danger:hover {*/
-  /*border: 1px solid #b3221d;*/
-  /*background-color: #b3221d;*/
-  /*}*/
+  .message-box__footer {
+    text-align: right;
+  }
 
   .fade-enter, .fade-leave-active {
     transform: scale(1.1);
