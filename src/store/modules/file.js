@@ -4,62 +4,68 @@ let uuid = require('node-uuid');
 const STORAGE_FILELIST_KEY = 'MARKIT_LOCAL_FILELIST';
 const STORAGE_ACTIVE_FILE_KEY = 'STORAGE_ACTIVE_FILE_KEY';
 
-function saveFilelistLocally(fileList) {
-  localStorage.setItem(STORAGE_FILELIST_KEY, JSON.stringify(fileList));
+function saveLocally() {
+  localStorage.setItem(STORAGE_FILELIST_KEY, JSON.stringify(state.fileList));
+  localStorage.setItem(STORAGE_ACTIVE_FILE_KEY, state.activeFileIndex);
 }
-function saveActiveIndexLocally(index) {
-  localStorage.setItem(STORAGE_ACTIVE_FILE_KEY, index);
-}
+
 function getLocally() {
-  var fileList = localStorage.getItem(STORAGE_FILELIST_KEY);
+  let activeFileIndex = JSON.parse(localStorage.getItem(STORAGE_ACTIVE_FILE_KEY)) || 0;
+  let fileList = JSON.parse(localStorage.getItem(STORAGE_FILELIST_KEY));
   if (!fileList || fileList.length === 0) {
-    fileList = [];
-    fileList.push(generateFileContent());
-    localStorage.setItem(STORAGE_FILELIST_KEY, JSON.stringify(fileList));
+    createFile();
+  }else{
+    state.fileList = fileList;
+    state.activeFileIndex = activeFileIndex;
   }
-  return JSON.parse(localStorage.getItem(STORAGE_FILELIST_KEY))
 }
-function generateFileContent() {
-  let cid = uuid.v1()
-  return {
-    cid: cid,
+
+function createFile() {
+  state.fileList.push({
+    cid: uuid.v1(),
     content: 'New File\n\n-----------------------\nHello Markit!'
+  });
+  state.activeFileIndex = state.fileList.length - 1
+}
+
+function deleteFile(index) {
+  state.fileList.splice(index, 1);
+  if (state.fileList.length === 0) {
+    createFile();
+  } else {
+    if (index === state.activeFileIndex) {
+      state.activeFileIndex = 0;
+    } else if (index < state.activeFileIndex) {
+      state.activeFileIndex--;
+    }
   }
 }
+
 const state = {
-  fileList: getLocally(),
-  activeFileIndex: parseInt(localStorage.getItem(STORAGE_ACTIVE_FILE_KEY)) || 0
-}
+  fileList: [],
+  activeFileIndex: 0
+};
+getLocally();
+
 const mutations = {
-  [types.FILE_CREATE] (state, msg)
+  [types.FILE_CREATE] (state)
   {
-    state.fileList.push(generateFileContent());
-    state.activeFileIndex = state.fileList.length - 1
-    saveFilelistLocally(state.fileList);
+    createFile();
+    saveLocally();
   },
   [types.FILE_UPDATE] (state, {index, content})
   {
     state.fileList[index].content = content;
-    saveFilelistLocally(state.fileList);
+    saveLocally();
   },
   [types.FILE_DELETE] (state, index)
   {
-    state.fileList.splice(index, 1);
-    if (state.fileList.length === 0) {
-      // this.createFile();//???
-    } else {
-      if (index === state.activeFileIndex) {
-        state.activeFileIndex = 0;
-      } else if (index < state.activeFileIndex) {
-        state.activeFileIndex--;
-      }
-    }
-    saveFilelistLocally(state.fileList);
-    saveActiveIndexLocally(state.activeFileIndex);
+    deleteFile(index);
+    saveLocally();
   },
   [types.FILE_CHANGE_ACTIVE]  (state, index) {
-    state.activeFileIndex = index
-    saveActiveIndexLocally(index)
+    state.activeFileIndex = index;
+    saveLocally();
   }
 }
 
