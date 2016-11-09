@@ -1,6 +1,6 @@
 <template>
-  <div class="message-box__wrapper" v-if="show">
-    <transition name="fade">
+  <transition name="fade">
+    <div class="message-box__wrapper" v-if="show">
       <div class="message-box__mask">
         <div class="message-box__box">
           <div class="message-box__header clearfix" v-if=" title !== '' ">
@@ -19,8 +19,8 @@
           </div>
         </div>
       </div>
-    </transition>
-  </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -109,7 +109,7 @@
     margin: 20px 0;
   }
 
-  .message-box__input input{
+  .message-box__input input {
     border: 1px solid #CCC;
     height: 35px;
     line-height: 25px;
