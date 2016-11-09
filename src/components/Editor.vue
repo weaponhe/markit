@@ -31,7 +31,7 @@
         <span class="editor-opt opt-item iconfont" @click="test1">alert</span>
         <span class="editor-opt opt-item iconfont" @click="test2">prompt</span>
         <span class="editor-opt opt-item iconfont" @click="test3">confirm</span>
-        <my-button>asdasd</my-button>
+        <span class="editor-opt opt-item iconfont" @click="test4">toast</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -56,7 +56,7 @@
     components: {
       myButton
     },
-      props: {
+    props: {
       options: {
         type: Object,
         default: function () {
@@ -137,6 +137,9 @@
           .catch(res=> {
             console.log(res)
           });
+      },
+      test4: function () {
+        this.$toast({});
       },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});

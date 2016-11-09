@@ -9,9 +9,6 @@
     <div class="container-menulist" v-if="menulistOpened">
       <Menulist></Menulist>
     </div>
-    <div class="container-toast">
-      <Toast></Toast>
-    </div>
     <div class="container-spinner" v-if="spinning">
       <Spinner></Spinner>
     </div>
@@ -29,7 +26,6 @@
   import Sidebar from './components/Sidebar'
   import Editor from './components/Editor'
   import Menulist from './components/Menulist'
-  import Toast from './components/Toast'
   import Spinner from './components/Spinner'
   import Modal from './components/Modal'
 
@@ -38,7 +34,6 @@
       Sidebar,
       Editor,
       Menulist,
-      Toast,
       Spinner,
       Modal
     },
@@ -50,9 +45,12 @@
 
 <style>
   @font-face {
-    font-family: 'iconfont';
-    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot'); /* IE9*/
-    src: url('//at.alicdn.com/t/font_1476881555_6268332.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1476881555_6268332.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1476881555_6268332.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1476881555_6268332.svg#iconfont') format('svg'); /* iOS 4.1- */
+    font-family: 'iconfont';  /* project id："163229" */
+    src: url('//at.alicdn.com/t/font_fz1xshikmiy66r.eot');
+    src: url('//at.alicdn.com/t/font_fz1xshikmiy66r.eot') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_fz1xshikmiy66r.woff') format('woff'),
+    url('//at.alicdn.com/t/font_fz1xshikmiy66r.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_fz1xshikmiy66r.svg#iconfont') format('svg');
   }
 
   .iconfont {
@@ -158,17 +156,6 @@
   .container-editor,
   .container-menulist {
     transition: all 0.3s ease-out;
-  }
-
-  .container-toast {
-    position: absolute;
-    z-index: 1000;
-    right: 100px;
-    top: 0;
-    width: 500px;
-    height: 50px;
-    /*background-color: red;*/
-    text-align: right;
   }
 
   .container-spinner {

@@ -5,7 +5,6 @@ import * as actions from './actions'
 import * as getters from './getters'
 import user from './modules/user'
 import file from './modules/file'
-import message from './modules/message'
 
 Vue.use(Vuex);
 const state = {
@@ -45,7 +44,6 @@ export default new Vuex.Store({
   actions,
   modules: {
     user,
-    file,
-    message
+    file
   }
 });
