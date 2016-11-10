@@ -35,7 +35,7 @@ const showNextMsg = () => {
   });
 }
 
-const MessageBox = function (options) {
+const MessageBox = function (options = {}) {
   return new Promise((resolve, reject) => {
     msgQueue.push({
       options,
@@ -46,14 +46,14 @@ const MessageBox = function (options) {
   });
 }
 
-MessageBox.alert = (title, message, options)=> {
+MessageBox.alert = (title, message, options = {})=> {
   return MessageBox(merge({
     type: 'alert',
     title: title,
     message: message,
   }, options));
 }
-MessageBox.confirm = (title, message, options)=> {
+MessageBox.confirm = (title, message, options = {})=> {
   return MessageBox(merge({
     type: 'confirm',
     title: title,
@@ -62,7 +62,7 @@ MessageBox.confirm = (title, message, options)=> {
   }, options));
 }
 
-MessageBox.prompt = (title, message, options)=> {
+MessageBox.prompt = (title, message, options = {})=> {
   return MessageBox(merge({
     type: 'prompt',
     title: title,

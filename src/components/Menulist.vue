@@ -1,18 +1,22 @@
 <template>
   <div class="menulist">
-    <!--<div class="sidebar-header"></div>-->
-    <ul class="menulist-ul">
+    <div v-if="user" class="menulist-header">
+      <img :src="user.avatar_url">
+      <div class="menulist-repo">repo : {{repo}}</div>
+    </div>
+    <ul class="menulist-ul" @click="close">
       <template v-if="user">
-        <li @click="sync">立即同步</li>
-        <li>设置</li>
+        <li class="divider"></li>
+        <li v-if="repo" @click="sync">立即同步</li>
+        <li v-if="repo" @click="upload">上传覆盖</li>
+        <li @click="setRepo">设置仓库</li>
         <li class="divider"></li>
         <a href="http://127.0.0.1:3000/logout">
           <li>退出</li>
         </a>
-
       </template>
       <template v-else>
-        <a href="http://127.0.0.1:3000/auth/github" @click="login">
+        <a href="http://127.0.0.1:3000/auth/github" @click="$store.commit('toggleSpinning')">
           <li>github登录</li>
         </a>
       </template>
@@ -24,17 +28,39 @@
   import * as types from '../store/mutation-types'
   export default{
     methods: {
-      sync () {
-        this.$store.commit(types.MESSAGE_PUSH, '正在同步')
-        this.$store.dispatch('sync')
+      close(){
+        this.$store.commit(types.TOGGLE_MENULIST);
       },
-      login(){
-        this.$store.commit('toggleSpinning')
+      upload () {
+        this.$confirm('确认上传', '上传操作会用本地文件完全覆盖云端文件，本地没有的文件在云端会被删除，是否继续？')
+          .then(()=> {
+            this.$store.dispatch('upload').then(()=> {
+              this.$success('上传成功')
+            })
+          })
+          .catch(()=> {
+            this.$error('上传失败')
+          })
+      },
+      sync () {
+        this.$store.dispatch('sync');
+      },
+      setRepo(){
+        this.$prompt('设置仓库', '请输入仓库名称', {inputContent: this.repo})
+          .then(res=> {
+            this.$store.commit(types.REPO_CHANGE, res.value);
+            this.$success('设置成功,当前仓库为:' + res.value)
+          })
+          .catch(()=> {
+          })
       }
     },
     computed: {
       user(){
         return this.$store.state.user.user
+      },
+      repo(){
+        return this.$store.state.file.repo
       }
     }
   }
@@ -53,6 +79,19 @@
     border-radius: 3px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
     font-size: 16px;
+  }
+
+  .menulist img {
+    display: block;
+    margin: 0 auto;
+    height: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+
+  .menulist-repo {
+    text-align: center;
+    margin: 10px 0;
   }
 
   .menulist-ul {
@@ -76,7 +115,7 @@
 
   .menulist-ul li.divider {
     height: 1px;
-    background-color: #BBB;
+    background-color: #666;
     margin: 10px 0;
   }
 

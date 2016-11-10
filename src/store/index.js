@@ -2,7 +2,6 @@ import Vue from 'vue'
 import  Vuex from 'vuex'
 import * as types from './mutation-types'
 import * as actions from './actions'
-import * as getters from './getters'
 import user from './modules/user'
 import file from './modules/file'
 
@@ -16,7 +15,7 @@ const state = {
 }
 
 const mutations = {
-  toggleSpinning (state) {
+  [types.TOGGLE_SPINNING] (state) {
     state.spinning = !state.spinning
   },
   [types.TOGGLE_SIDEBAR](state){
@@ -35,7 +34,6 @@ const mutations = {
 
 export default new Vuex.Store({
   state,
-  getters,
   mutations,
   actions,
   modules: {

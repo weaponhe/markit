@@ -11,10 +11,12 @@ export const getUser = ({state, commit}) => {
     })
 }
 
-export const sync = ({state, commit}) => {
-  githubAPI.deleteFiles(state, ()=> {
-    githubAPI.createFiles(state, ()=> {
-      commit(types.MESSAGE_PUSH, '同步完成')
-    })
+export const upload = ({state, commit}) => {
+  return new Promise((resolve, reject) => {
+    githubAPI.upload(state,resolve,reject)
   })
+}
+
+export const sync = ({state, commit}) => {
+  githubAPI.sync(state, commit)
 }

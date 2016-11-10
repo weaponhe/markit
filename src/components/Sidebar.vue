@@ -30,10 +30,12 @@
       },
       createFile: function () {
         this.$store.commit(types.FILE_CREATE)
+        this.$success("创建成功");
       },
       deleteFile: function (index) {
         this.$confirm('提示', '删除文件，是否继续？').then(response=> {
           this.$store.commit(types.FILE_DELETE, index);
+          this.$success("删除成功");
         }).catch(response=> {
         })
       }
@@ -52,15 +54,6 @@
         fileList: state=>state.file.fileList,
         user: state=>state.user.user
       })
-//      activeFileIndex(){
-//        return this.$store.state.file.activeFileIndex
-//      },
-//      fileList(){
-//        return this.$store.state.file.fileList
-//      },
-//      user(){
-//        return this.$store.state.user.user
-//      }
     }
   }
 </script>

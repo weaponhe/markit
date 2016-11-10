@@ -10,7 +10,7 @@
           <div class="message-box__content">
             <div class="message-box__message" v-if=" message !== '' ">{{message}}</div>
             <div class="message-box__input" v-if="showInput">
-              <input v-model="inputContent" type="text">
+              <input v-model="inputContent" type="text" >
             </div>
           </div>
           <div class="message-box__footer">

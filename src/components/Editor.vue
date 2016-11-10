@@ -28,13 +28,6 @@
         <span class="editor-opt opt-item iconfont" @click="insertUL">&#xe650;</span>
         <span class="editor-opt opt-item iconfont" @click="insertTable">&#xe659;</span>
         <span class="editor-opt opt-item iconfont" @click="insertHR">&#xe632;</span>
-        <span class="editor-opt opt-item iconfont" @click="test1">alert</span>
-        <span class="editor-opt opt-item iconfont" @click="test2">prompt</span>
-        <span class="editor-opt opt-item iconfont" @click="test3">confirm</span>
-        <span class="editor-opt opt-item iconfont" @click="test4">success</span>
-        <span class="editor-opt opt-item iconfont" @click="test5">info</span>
-        <span class="editor-opt opt-item iconfont" @click="test6">warn</span>
-        <span class="editor-opt opt-item iconfont" @click="test7">error</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -114,45 +107,6 @@
       });
     },
     methods: {
-      test1: function () {
-        this.$alert('Alert', 'content', {})
-          .then(res=> {
-            console.log(res)
-          })
-          .catch(res=> {
-            console.log(res)
-          });
-      },
-      test2: function () {
-        this.$prompt('Prompt', 'content', {})
-          .then(res=> {
-            console.log(res)
-          })
-          .catch(res=> {
-            console.log(res)
-          });
-      },
-      test3: function () {
-        this.$confirm('confirm', 'content', {})
-          .then(res=> {
-            console.log(res)
-          })
-          .catch(res=> {
-            console.log(res)
-          });
-      },
-      test4: function () {
-        this.$success("asdasd");
-      },
-      test5: function () {
-        this.$info("asdas");
-      },
-      test6: function () {
-        this.$warning("asdas");
-      },
-      test7: function () {
-        this.$error("asdas");
-      },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});
       },
