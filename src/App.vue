@@ -12,11 +12,6 @@
     <div class="container-spinner" v-if="spinning">
       <Spinner></Spinner>
     </div>
-    <div class="container-modal">
-      <Modal v-if="modalOpened">
-        <h3 slot="header">确认</h3>
-      </Modal>
-    </div>
   </div>
 </template>
 
@@ -27,18 +22,16 @@
   import Editor from './components/Editor'
   import Menulist from './components/Menulist'
   import Spinner from './components/Spinner'
-  import Modal from './components/Modal'
 
   export default {
     components: {
       Sidebar,
       Editor,
       Menulist,
-      Spinner,
-      Modal
+      Spinner
     },
     computed: {
-      ...mapState(['spinning', 'sidebarOpened', 'menulistOpened', 'modalOpened'])
+      ...mapState(['spinning', 'sidebarOpened', 'menulistOpened'])
     }
   }
 </script>
@@ -166,11 +159,4 @@
     right: 0;
   }
 
-  .container-modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-  }
 </style>

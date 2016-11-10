@@ -11,7 +11,6 @@ const state = {
   spinning: false,
   sidebarOpened: false,
   menulistOpened: false,
-  modalOpened: false,
   username: '',
   token: ''
 }
@@ -25,9 +24,6 @@ const mutations = {
   },
   [types.TOGGLE_MENULIST](state){
     state.menulistOpened = !state.menulistOpened
-  },
-  [types.TOGGLE_MODAL](state){
-    state.modalOpened = !state.modalOpened
   },
   [types.USERNAME](state, username){
     state.username = username
