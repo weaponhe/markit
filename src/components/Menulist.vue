@@ -2,19 +2,20 @@
   <div class="menulist">
     <!--<div class="sidebar-header"></div>-->
     <ul class="menulist-ul">
-      <!--<template v-if="user">-->
-      <!--<a href="" @click="sync">-->
-      <li @click="sync">立即同步</li>
-      <!--</a>-->
-      <li>设置</li>
-      <li class="divider"></li>
-      <li @click="logout">退出</li>
-      <!--</template>-->
-      <!--<template v-else>-->
-      <a href="http://127.0.0.1:3000/auth/github" @click="login">
-        <li>github登录</li>
-      </a>
-      <!--</template>-->
+      <template v-if="user">
+        <li @click="sync">立即同步</li>
+        <li>设置</li>
+        <li class="divider"></li>
+        <a href="http://127.0.0.1:3000/logout">
+          <li>退出</li>
+        </a>
+
+      </template>
+      <template v-else>
+        <a href="http://127.0.0.1:3000/auth/github" @click="login">
+          <li>github登录</li>
+        </a>
+      </template>
     </ul>
   </div>
 </template>
@@ -29,10 +30,6 @@
       },
       login(){
         this.$store.commit('toggleSpinning')
-        this.$store.dispatch('login')
-      },
-      logout(){
-        this.$store.dispatch('logout')
       }
     },
     computed: {

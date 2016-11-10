@@ -11,13 +11,6 @@ export const getUser = ({state, commit}) => {
     })
 }
 
-export const logout = (context) => {
-  Vue.http.get('/logout')
-    .then((response) => {
-      context.commit(types.USER_LOGOUT);
-    })
-}
-
 export const sync = ({state, commit}) => {
   githubAPI.deleteFiles(state, ()=> {
     githubAPI.createFiles(state, ()=> {
