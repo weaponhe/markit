@@ -12,6 +12,10 @@ Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$toast = Toast
+Vue.prototype.$success = Toast.success
+Vue.prototype.$info = Toast.info
+Vue.prototype.$warning = Toast.warning
+Vue.prototype.$error = Toast.error
 
 
 /* eslint-disable no-new */

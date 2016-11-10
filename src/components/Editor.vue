@@ -142,16 +142,16 @@
           });
       },
       test4: function () {
-        this.$toast({type:'success'});
+        this.$success("asdasd");
       },
       test5: function () {
-        this.$toast({type:'info'});
+        this.$info("asdas");
       },
       test6: function () {
-        this.$toast({type:'warning'});
+        this.$warning("asdas");
       },
       test7: function () {
-        this.$toast({type:'error'});
+        this.$error("asdas");
       },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});

@@ -31,6 +31,33 @@ const Toast = function (options) {
   showNextMsg();
 }
 
+Toast.success = (message)=> {
+  Toast({
+    type: 'success',
+    message
+  });
+}
+
+Toast.info = (message)=> {
+  Toast({
+    type: 'info',
+    message
+  });
+}
+
+Toast.warning = (message)=> {
+  Toast({
+    type: 'warning',
+    message
+  });
+}
+
+Toast.error = (message)=> {
+  Toast({
+    type: 'error',
+    message
+  });
+}
 
 export default Toast;
 export {Toast};
