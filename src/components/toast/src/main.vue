@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div class="toast" v-show="show">
-      <span class="toast-type iconfont" v-html="mark"></span>
+      <span class="toast-type iconfont" :class="type" v-html="mark"></span>
       <span class="toast-message">{{message}}</span>
     </div>
   </transition>
@@ -24,7 +24,13 @@
       mark(){
         switch (this.type) {
           case 'success':
-            return '&#xe632;'
+            return '&#xe6b1;'
+          case 'warning':
+            return '&#xe6b6;'
+          case 'info':
+            return '&#xe6a4;'
+          case 'error':
+            return '&#xe6b7;'
         }
       }
     }
@@ -44,7 +50,7 @@
     line-height: 40px;
     background-color: #FFF;
     vertical-align: middle;
-    box-shadow: 0 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
     transition: all .5s;
   }
 
@@ -52,9 +58,26 @@
     float: left;
     height: 100%;
     width: 40px;
-    background-color: #4fc08d;
     color: #FFF;
     text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .success {
+    background-color: #4fc08d;
+  }
+
+  .info {
+    background-color: #20A0FF;
+  }
+
+  .warning {
+    background-color: #F7BA2A;
+  }
+
+  .error {
+    background-color: #FF4949;
   }
 
   .toast-message {

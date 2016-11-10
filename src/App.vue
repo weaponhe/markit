@@ -46,13 +46,12 @@
 <style>
   @font-face {
     font-family: 'iconfont';  /* project id："163229" */
-    src: url('//at.alicdn.com/t/font_fz1xshikmiy66r.eot');
-    src: url('//at.alicdn.com/t/font_fz1xshikmiy66r.eot') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_fz1xshikmiy66r.woff') format('woff'),
-    url('//at.alicdn.com/t/font_fz1xshikmiy66r.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_fz1xshikmiy66r.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_t7cdt3084zwa5rk9.eot');
+    src: url('//at.alicdn.com/t/font_t7cdt3084zwa5rk9.eot') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_t7cdt3084zwa5rk9.woff') format('woff'),
+    url('//at.alicdn.com/t/font_t7cdt3084zwa5rk9.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_t7cdt3084zwa5rk9.svg#iconfont') format('svg');
   }
-
   .iconfont {
     font-family: "iconfont" !important;
     font-size: 16px;

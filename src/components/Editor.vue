@@ -31,7 +31,10 @@
         <span class="editor-opt opt-item iconfont" @click="test1">alert</span>
         <span class="editor-opt opt-item iconfont" @click="test2">prompt</span>
         <span class="editor-opt opt-item iconfont" @click="test3">confirm</span>
-        <span class="editor-opt opt-item iconfont" @click="test4">toast</span>
+        <span class="editor-opt opt-item iconfont" @click="test4">success</span>
+        <span class="editor-opt opt-item iconfont" @click="test5">info</span>
+        <span class="editor-opt opt-item iconfont" @click="test6">warn</span>
+        <span class="editor-opt opt-item iconfont" @click="test7">error</span>
       </div>
     </div>
     <textarea id="editor-textarea"></textarea>
@@ -139,7 +142,16 @@
           });
       },
       test4: function () {
-        this.$toast({});
+        this.$toast({type:'success'});
+      },
+      test5: function () {
+        this.$toast({type:'info'});
+      },
+      test6: function () {
+        this.$toast({type:'warning'});
+      },
+      test7: function () {
+        this.$toast({type:'error'});
       },
       contentChange: function (newContent) {
         this.$store.commit(types.FILE_UPDATE, {index: this.activeFileIndex, content: newContent});
