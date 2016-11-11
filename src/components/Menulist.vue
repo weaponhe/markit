@@ -34,16 +34,25 @@
       upload () {
         this.$confirm('确认上传', '上传操作会用本地文件完全覆盖云端文件，本地没有的文件在云端会被删除，是否继续？')
           .then(()=> {
-            this.$store.dispatch('upload').then(()=> {
-              this.$success('上传成功')
-            })
+            return this.$store.dispatch('upload')
           })
-          .catch(()=> {
-            this.$error('上传失败')
+          .then(()=> {
+            this.$success('上传成功，已用本地目录覆盖云端。')
+          })
+          .catch((err)=> {
+            console.error(err)
+            this.$error('上传失败，请稍后再试。')
           })
       },
       sync () {
-        this.$store.dispatch('sync');
+        this.$store.dispatch('sync')
+          .then(()=> {
+            this.$success('同步成功')
+          })
+          .catch((err)=> {
+            console.error(err)
+            this.$error('同步失败，请稍后再试。')
+          })
       },
       setRepo(){
         this.$prompt('设置仓库', '请输入仓库名称', {inputContent: this.repo})
