@@ -3,6 +3,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var GitHubApi = require("github");
+var path = require('path');
 var github = new GitHubApi({
   debug: true,
   protocol: "https",
@@ -51,6 +52,11 @@ app.use(session({secret: 'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/', function (req, res) {
+    res.sendFile(path.resolve(__dirname, 'dist/index.html'));
+  }
+);
+
 app.get('/auth/github',
   passport.authenticate('github', {scope: ["repo", "user"]}),
   function (req, res) {
@@ -60,13 +66,13 @@ app.get('/auth/github',
 app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/login'}),
   function (req, res) {
-    res.redirect('http://127.0.0.1:8080/?token=' + token+'&username='+req.user.username);
+    res.redirect('http://127.0.0.1:3000/?token=' + token + '&username=' + req.user.username);
   }
 );
 
 app.get('/logout', ensureAuthenticated, function (req, res) {
   req.logout();
-  res.redirect('http://127.0.0.1:8080');
+  res.redirect('http://127.0.0.1:3000');
 });
 
 app.listen(3000);

@@ -2,7 +2,7 @@
   <div class="menulist">
     <div v-if="user" class="menulist-header">
       <img :src="user.avatar_url">
-      <div class="menulist-repo">repo : {{repo}}</div>
+      <div  v-if="repo" class="menulist-repo">repo : {{repo}}</div>
     </div>
     <ul class="menulist-ul" @click="close">
       <template v-if="user">
@@ -16,7 +16,7 @@
         </a>
       </template>
       <template v-else>
-        <a href="http://127.0.0.1:3000/auth/github" @click="$store.commit('toggleSpinning')">
+        <a href="http://127.0.0.1:3000/auth/github" @click="$store.commit('TOGGLE_SPINNING')">
           <li>github登录</li>
         </a>
       </template>

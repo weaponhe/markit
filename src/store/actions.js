@@ -2,12 +2,14 @@ import Vue from 'vue'
 import * as types from './mutation-types'
 import * as githubAPI from '../github'
 
-
 export const getUser = ({state, commit}) => {
   Vue.http.get('https://api.github.com/users/' + state.username)
     .then((response) => {
       let user = response.data
       user && commit(types.USER_LOGIN, user);
+    })
+    .catch((err) => {
+      console.error('getUser Fialed:', err)
     })
 }
 

@@ -38,7 +38,7 @@
 </template>
 <script>
   import CodeMirror from 'codemirror'
-  import {mapState} from 'Vuex'
+  import {mapState} from 'vuex'
   import * as types from '../store/mutation-types'
   import  myButton from './Button'
   var marked = require('marked')
