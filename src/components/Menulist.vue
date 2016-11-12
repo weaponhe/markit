@@ -11,12 +11,12 @@
         <li v-if="repo" @click="upload">上传覆盖</li>
         <li @click="setRepo">设置仓库</li>
         <li class="divider"></li>
-        <a href="http://127.0.0.1:3000/logout">
+        <a href="/logout">
           <li>退出</li>
         </a>
       </template>
       <template v-else>
-        <a href="http://127.0.0.1:3000/auth/github" @click="$store.commit('TOGGLE_SPINNING')">
+        <a href="/auth/github" @click="$store.commit('TOGGLE_SPINNING')">
           <li>github登录</li>
         </a>
       </template>

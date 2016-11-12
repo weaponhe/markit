@@ -33,6 +33,7 @@ passport.use(new GitHubStrategy({
   clientID: GITHUB_CLIENT_ID,
   clientSecret: GITHUB_CLIENT_SECRET,
   callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+  // callbackURL: "/auth/github/callback"
 }, function (accessToken, refreshToken, profile, done) {
   token = accessToken;
   github.authenticate({
@@ -66,13 +67,14 @@ app.get('/auth/github',
 app.get('/auth/github/callback',
   passport.authenticate('github', {failureRedirect: '/login'}),
   function (req, res) {
-    res.redirect('http://127.0.0.1:3000/?token=' + token + '&username=' + req.user.username);
+    console.log("asdasd")
+    res.redirect('/?token=' + token + '&username=' + req.user.username);
   }
 );
 
 app.get('/logout', ensureAuthenticated, function (req, res) {
   req.logout();
-  res.redirect('http://127.0.0.1:3000');
+  res.redirect('/');
 });
 
 app.listen(3000);
