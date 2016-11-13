@@ -1,25 +1,34 @@
-var express = require('express');
-var passport = require('passport');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var GitHubApi = require("github");
-var path = require('path');
+var express = require('express'),
+  path = require('path'),
+  bodyParser = require('body-parser'),
+  session = require('express-session'),
+  passport = require('passport'),
+  GitHubStrategy = require('passport-github2').Strategy,
+  GitHubApi = require("github");
+
+//development variable setting
+var GITHUB_CLIENT_ID = "b21159b60dc743233a34",
+  GITHUB_CLIENT_SECRET = "d75300f9e1f44e245a53e03fbf8400aeb713da85",
+  GITHUB_CALLBACK_URL = "http://127.0.0.1:3000/auth/github/callback"
+//production variable setting
+if (process.env.NODE_ENV === 'production') {
+  GITHUB_CLIENT_ID = "9ce08a4dafad4dc158eb"
+  GITHUB_CLIENT_SECRET = "8f141d112d4cf8179f8410a4306ad754ff2fd1f9"
+  GITHUB_CALLBACK_URL = "http://121.42.214.145:3000/auth/github/callback"
+}
+
 var github = new GitHubApi({
   debug: true,
   protocol: "https",
-  host: "api.github.com", // should be api.github.com for GitHub
-  // pathPrefix: "/", // for some GHEs; none for GitHub
+  host: "api.github.com",
   headers: {
-    "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
+    "user-agent": "My-Cool-GitHub-App"
   },
   Promise: require('bluebird'),
-  followRedirects: false, // default: true; there's currently an issue with non-get redirects, so allow ability to disable follow-redirects
+  followRedirects: false,
   timeout: 5000
 });
-var GitHubStrategy = require('passport-github2').Strategy;
 
-var GITHUB_CLIENT_ID = "b21159b60dc743233a34";
-var GITHUB_CLIENT_SECRET = "d75300f9e1f44e245a53e03fbf8400aeb713da85";
 var token = '';
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -32,8 +41,7 @@ passport.deserializeUser(function (user, done) {
 passport.use(new GitHubStrategy({
   clientID: GITHUB_CLIENT_ID,
   clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: "http://121.42.214.145:3000/auth/github/callback"
-  // callbackURL: "/auth/github/callback"
+  callbackURL: GITHUB_CALLBACK_URL
 }, function (accessToken, refreshToken, profile, done) {
   token = accessToken;
   github.authenticate({
