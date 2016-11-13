@@ -14,9 +14,8 @@ var GITHUB_CLIENT_ID = "b21159b60dc743233a34",
 if (process.env.NODE_ENV === 'production') {
   GITHUB_CLIENT_ID = "9ce08a4dafad4dc158eb"
   GITHUB_CLIENT_SECRET = "8f141d112d4cf8179f8410a4306ad754ff2fd1f9"
-  GITHUB_CALLBACK_URL = "http://121.42.214.145:3000/auth/github/callback"
+  GITHUB_CALLBACK_URL = "http://md.weaponhe.cn/auth/github/callback"
 }
-
 var github = new GitHubApi({
   debug: true,
   protocol: "https",
