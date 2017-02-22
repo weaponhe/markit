@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "server-dev": "node app.js",
-    "server-start": "cross-env NODE_ENV=production pm2 start app.js"
+    "start": "cross-env NODE_ENV=production pm2 start app.js --name markit"
   },
   "dependencies": {
     "bluebird": "^3.4.6",

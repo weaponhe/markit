@@ -12,6 +12,7 @@ var GITHUB_CLIENT_ID = "b21159b60dc743233a34",
   GITHUB_CALLBACK_URL = "http://127.0.0.1:3000/auth/github/callback"
 //production variable setting
 if (process.env.NODE_ENV === 'production') {
+console.log("asdasd")
   GITHUB_CLIENT_ID = "9ce08a4dafad4dc158eb"
   GITHUB_CLIENT_SECRET = "8f141d112d4cf8179f8410a4306ad754ff2fd1f9"
   GITHUB_CALLBACK_URL = "http://md.weaponhe.cn/auth/github/callback"
@@ -68,6 +69,7 @@ app.get('/', function (req, res) {
 app.get('/auth/github',
   passport.authenticate('github', {scope: ["repo", "user"]}),
   function (req, res) {
+	console.log("dasdas")
   }
 );
 
